@@ -1,0 +1,8 @@
+docker network create reto-mysql
+docker network ls
+docker container run --name java_db --network reto-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=retobbva -d mysql:8
+docker container logs -f <2firstletters>
+docker container exec -it <2firstletters> bash
+docker image build -t reto_app .
+docker container run --network reto-mysql --name reto_app-cont -p 8080:8080 -d reto_app
+docker container logs -f 34 
