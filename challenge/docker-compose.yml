@@ -1,20 +1,24 @@
 version: "3.9"
 
 services:
+  java_db:
+    container_name: java_db
+    image: mysql:8
+    networks:
+      - employee-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=retobbva  
 
   reto_app:
     container_name: reto_app
     image: bbva-reto_app:1.0.0
-    build: .
     ports:
-      - 8080:8080
+      - "8080:8080"
+    networks:
+      - employee-mysql
     depends_on:
-      - java_db
-  java_db:
-    container_name: java_db
-    image: mysql
-    ports:
-      - 5432:5432
-    environment:
-      MYSQL_ROOT_PASSWORD: Siniy%20Akula
-      MYSQL_DATABASE: retobbva
+       - java_db
+
+networks:
+  employee-mysql:
